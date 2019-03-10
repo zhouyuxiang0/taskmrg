@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import '@angular/material/prebuilt-themes/deeppurple-amber.css';
+@import '../node_modules/material-design-icons-iconfont/dist/material-design-icons.css';
 
 html, body, app-root, mat-sidenav-container, .site {
     width: 100%;
@@ -13,4 +14,8 @@ html, body, app-root, mat-sidenav-container, .site {
 
 main {
     flex: 1;
+}
+
+.fill-remaining-space {
+    flex: 1 1 auto;
 }
