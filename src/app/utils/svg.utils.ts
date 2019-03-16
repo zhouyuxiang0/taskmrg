@@ -1,5 +1,6 @@
-import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
+import { MatIconRegistry } from '@angular/material/icon';
+
 
 export function loadSvgResources (ir: MatIconRegistry, ds: DomSanitizer) {
     const imgDir = 'assets/img';
@@ -7,27 +8,27 @@ export function loadSvgResources (ir: MatIconRegistry, ds: DomSanitizer) {
     const dayDir = `${imgDir}/days`;
     const avatarDir = `${imgDir}/avatar`;
     ir.addSvgIconSetInNamespace(
-        'avatars', 
+        'avatars',
         ds.bypassSecurityTrustResourceUrl(`${avatarDir}/avatars.svg`)
     );
     ir.addSvgIcon(
-        'day', 
+        'day',
         ds.bypassSecurityTrustResourceUrl(`${sidebarDir}/day.svg`)
     );
     ir.addSvgIcon(
-        'month', 
+        'month',
         ds.bypassSecurityTrustResourceUrl(`${sidebarDir}/month.svg`)
     );
     ir.addSvgIcon(
-        'project', 
+        'project',
         ds.bypassSecurityTrustResourceUrl(`${sidebarDir}/project.svg`)
     );
     ir.addSvgIcon(
-        'projects', 
+        'projects',
         ds.bypassSecurityTrustResourceUrl(`${sidebarDir}/projects.svg`)
     );
     ir.addSvgIcon(
-        'week', 
+        'week',
         ds.bypassSecurityTrustResourceUrl(`${sidebarDir}/week.svg`)
     );
     const days = [
