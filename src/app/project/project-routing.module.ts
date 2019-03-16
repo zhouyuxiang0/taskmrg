@@ -1,17 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { LoginComponent } from './login/login.component';
-import { RegisterComponent } from './register/register.component';
-
+import { ProjectListComponent } from './project-list/project-list.component';
 
 const routes: Routes = [
-    {
-        path: 'login', 
-        component: LoginComponent
-    }, {
-        path: 'register',
-        component: RegisterComponent
+    { 
+        path: 'project', 
+        component: ProjectListComponent 
     }
 ];
 
@@ -24,4 +19,4 @@ const routes: Routes = [
         RouterModule
     ]
 })
-export class LoginRoutingModule {}
+export class ProjectRoutingModule {}

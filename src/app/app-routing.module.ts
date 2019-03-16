@@ -5,12 +5,23 @@ import { AppComponent } from './app.component';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: '/login', 
-    pathMatch: 'full'
-  },{
-    path: '',
-    loadChildren: './login/login.module#LoginModule'
-  }
+    children: [
+      {
+        path: '',
+        redirectTo: 'login',
+        pathMatch: 'full'
+      }, {
+        path: '',
+        loadChildren: './login/login.module#LoginModule'
+      }, {
+        path:'',
+        loadChildren: './project/project.module#ProjectModule'
+      }
+    ]
+  }//{
+    // path: '',
+    // loadChildren: './project/project.module#ProjectModule'
+  //}
 ];
 
 @NgModule({
