@@ -11,7 +11,7 @@
   </div>
 </form>
 <mat-autocomplete #autoMembers="matAutocomplete" [displayWith]="displayUser">
-  <mat-option *ngFor="let item of items">
+  <mat-option *ngFor="let item of items" [value]="item">
     {{item.name}}
   </mat-option>
 </mat-autocomplete>
