@@ -9,12 +9,12 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { loadSvgResources } from '../utils/svg.utils';
 import { SharedModule } from '../shared/shared.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
+import 'hammerjs';
 
 @NgModule({
   declarations: [
-    HeaderComponent, 
-    FooterComponent, 
+    HeaderComponent,
+    FooterComponent,
     SidebarComponent
   ],
   imports: [
@@ -32,7 +32,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 export class CoreModule {
   constructor(
     @Optional() @SkipSelf() parent: CoreModule,
-    ir: MatIconRegistry, 
+    ir: MatIconRegistry,
     ds: DomSanitizer
   ) {
     if(parent) {
