@@ -7,19 +7,19 @@ import { ProjectListComponent } from './project-list/project-list.component';
 
 
 const routes: Routes = [
-    { 
-        path: 'project',
-        component: ProjectListComponent
-    }
+  {
+    path: 'projects',
+    component: ProjectListComponent
+  }
 ];
 
 @NgModule({
-    imports: [
-        CommonModule,
-        RouterModule.forChild(routes)
-    ],
-    exports: [
-        RouterModule
-    ]
+  imports: [
+    CommonModule,
+    RouterModule.forChild(routes)
+  ],
+  exports: [
+    RouterModule
+  ]
 })
-export class ProjectRoutingModule {}
+export class ProjectRoutingModule { }
