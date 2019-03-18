@@ -12,6 +12,10 @@ export function loadSvgResources (ir: MatIconRegistry, ds: DomSanitizer) {
         'avatars',
         ds.bypassSecurityTrustResourceUrl(`${avatarDir}/avatars.svg`)
     );
+    ir.addSvgIconSetInNamespace(
+        'unassigned',
+        ds.bypassSecurityTrustResourceUrl(`${avatarDir}/unassigned.svg`)
+    );
     ir.addSvgIcon(
         'day',
         ds.bypassSecurityTrustResourceUrl(`${sidebarDir}/day.svg`)

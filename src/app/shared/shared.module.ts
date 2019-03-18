@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatIconModule } from '@angular/material/icon';
@@ -10,6 +11,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { NgModule } from '@angular/core';
 
 @NgModule({
@@ -26,7 +28,9 @@ import { NgModule } from '@angular/core';
     MatGridListModule,
     MatDialogModule,
     MatAutocompleteModule,
-    MatMenuModule
+    MatMenuModule,
+    MatCheckboxModule,
+    MatTooltipModule
   ],
   exports: [
     CommonModule,
@@ -40,7 +44,9 @@ import { NgModule } from '@angular/core';
     MatGridListModule,
     MatDialogModule,
     MatAutocompleteModule,
-    MatMenuModule
+    MatMenuModule,
+    MatCheckboxModule,
+    MatTooltipModule
   ]
 })
 export class SharedModule { }
