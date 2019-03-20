@@ -1,4 +1,4 @@
-import { Component, HostBinding, Inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, HostBinding, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material';
 
 import { ConfirmDialogComponent } from 'src/app/shared/confirm-dialog/confirm-dialog.component';
@@ -14,7 +14,8 @@ import { slideToRight } from 'src/app/anims/router.anim';
   animations: [
     slideToRight,
     listAnimation
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProjectListComponent implements OnInit {
 
@@ -34,7 +35,8 @@ export class ProjectListComponent implements OnInit {
     },
   ];
   constructor(
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private cd: ChangeDetectorRef
   ) { }
 
   ngOnInit() {
@@ -44,7 +46,8 @@ export class ProjectListComponent implements OnInit {
     const dialogRef = this.dialog.open(NewProjectComponent, { data: { title: '新增项目' } });
     dialogRef.afterClosed().subscribe(result => {
       console.log(result);
-      this.projects = [...this.projects, { id: 3, name: "一个新项目", desc: "这是一个新项目", coverImg: "assets/img/covers/8.jpg" }];
+      this.projects = [...this.projects, { id: 3, name: "you一个新项目", desc: "you一个新项目", coverImg: "assets/img/covers/8.jpg" }, { id: 4, name: "一个新项目", desc: "这是一个新项目", coverImg: "assets/img/covers/9.jpg" }];
+      this.cd.markForCheck();
     });
   }
 
@@ -61,6 +64,7 @@ export class ProjectListComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log(this.projects);
       this.projects = this.projects.filter(p => p.id !== project.id);
+      this.cd.markForCheck();
     });
   }
 
