@@ -1,4 +1,4 @@
-import { Component, HostBinding, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, HostBinding, OnInit } from '@angular/core';
 
 import { ConfirmDialogComponent } from 'src/app/shared/confirm-dialog/confirm-dialog.component';
 import { CopyTaskComponent } from '../copy-task/copy-task.component';
@@ -13,7 +13,8 @@ import { slideToRight } from 'src/app/anims/router.anim';
   styleUrls: ['./task-home.component.scss'],
   animations: [
     slideToRight
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TaskHomeComponent implements OnInit {
 
@@ -80,7 +81,8 @@ export class TaskHomeComponent implements OnInit {
     }
   ];
   constructor(
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private cd: ChangeDetectorRef
   ) { }
 
   ngOnInit() {
