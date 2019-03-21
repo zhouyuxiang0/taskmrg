@@ -18,6 +18,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { NgModule } from '@angular/core';
+import { DirectiveModule } from '../directive/directive.module';
 
 @NgModule({
   declarations: [ConfirmDialogComponent],
@@ -39,7 +40,8 @@ import { NgModule } from '@angular/core';
     MatRadioModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatSelectModule
+    MatSelectModule,
+    DirectiveModule
   ],
   exports: [
     CommonModule,
@@ -59,7 +61,8 @@ import { NgModule } from '@angular/core';
     MatRadioModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatSelectModule
+    MatSelectModule,
+    DirectiveModule
   ],
   entryComponents: [
     ConfirmDialogComponent

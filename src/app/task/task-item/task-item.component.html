@@ -4,7 +4,7 @@
   'priority-normal': item.priority === 3,
   'priority-important': item.priority === 2,
   'priority-emergency': item.priority === 1
-}" (click)="onItemClick()">
+}" (click)="onItemClick()" [app-draggable]="true" [draggedClass]="'drag-start'">
   <mat-checkbox class="status" [checked]="item.completed" (click)="onCheckBoxClick($event)">
   </mat-checkbox>
   <div mat-line class="content" [ngClass]="{'completed': item.completed}">
