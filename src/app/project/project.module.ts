@@ -22,4 +22,4 @@ import { SharedModule } from '../shared/shared.module';
     ProjectRoutingModule
   ]
 })
-export class ProjectModule { }
+export class ProjectModule {}

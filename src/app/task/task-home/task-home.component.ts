@@ -92,7 +92,7 @@ export class TaskHomeComponent implements OnInit {
   launchNewTaskDialog() {
     const dialogRef = this.dialog.open(NewTaskComponent, {
       data: {
-        title: '新建任务:'
+        title: '新建任务'
       }
     });
   }

@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 import { DirectiveModule } from '../directive/directive.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ImageListSelectComponent } from './image-list-select/image-list-select.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -20,7 +21,6 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { NgModule } from '@angular/core';
-import { ImageListSelectComponent } from './image-list-select/image-list-select.component';
 
 @NgModule({
   declarations: [ConfirmDialogComponent, ImageListSelectComponent],
@@ -68,7 +68,8 @@ import { ImageListSelectComponent } from './image-list-select/image-list-select.
     MatSelectModule,
     DirectiveModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ImageListSelectComponent
   ],
   entryComponents: [
     ConfirmDialogComponent

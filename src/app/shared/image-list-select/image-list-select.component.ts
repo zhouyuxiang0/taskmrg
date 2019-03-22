@@ -1,10 +1,24 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { ControlValueAccessor } from '@angular/forms';
+import { Component, forwardRef, Input } from '@angular/core';
+import {
+  ControlValueAccessor,
+  FormControl,
+  NG_VALIDATORS,
+  NG_VALUE_ACCESSOR
+  } from '@angular/forms';
 
 @Component({
   selector: 'app-image-list-select',
   templateUrl: './image-list-select.component.html',
-  styleUrls: ['./image-list-select.component.scss']
+  styleUrls: ['./image-list-select.component.scss'],
+  providers: [{
+    provide: NG_VALUE_ACCESSOR,
+    useExisting: forwardRef(() => ImageListSelectComponent),
+    multi: true
+  }, {
+    provide: NG_VALIDATORS,
+    useExisting: forwardRef(() => ImageListSelectComponent),
+    multi: true
+  }]
 })
 export class ImageListSelectComponent implements ControlValueAccessor {
 
@@ -17,22 +31,34 @@ export class ImageListSelectComponent implements ControlValueAccessor {
 
   selected: string;
 
-  constructor() { }
+  constructor() {}
+  private propagateChange = (_: any) => {};
 
   onChange(i) {
     this.selected = this.items[i];
+    this.propagateChange(this.selected);
   }
 
-  writeValue(): void {
-
+  writeValue(obj: any): void {
+    this.selected = obj;
   }
 
-  registerOnChange(): void {
-
+  registerOnChange(fn: any): void {
+    this.propagateChange = fn;
   }
 
   registerOnTouched(): void {
 
+  }
+
+  validate(c: FormControl): {
+    [key: string]: any
+  } {
+    return this.selected ? null : {
+      imageListInvalid: {
+        valid: false
+      }
+    };
   }
 
 }
