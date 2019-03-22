@@ -5,6 +5,7 @@
     <app-task-header [header]="list.name" (newTask)="launchNewTaskDialog()" (moveAll)="launchCopyTaskDialog()"
       (delList)="launchConfirmDialog()" (onEditList)="launchEditListDialog()">
     </app-task-header>
+    <app-quick-task (quickTask)="handleQuickTask($event)"></app-quick-task>
     <app-task-item *ngFor="let task of list.tasks" [item]="task" (taskClick)="launchUpdateTaskDialog(task)">
     </app-task-item>
   </app-task-list>
