@@ -13,7 +13,7 @@ export class QuoteService {
   ) {}
 
   getQuote(): Observable < Quote > {
-    const uri = `${this.config.uri}/quotes/${Math.floor(Math.random()*10)}`;
-    return this.http.get(uri).pipe(map(res => res as Quote));
+    const uri = `${this.config.uri}/quotes/${Math.floor(Math.random() * 10)}`;
+    return this.http.get(uri).debug('quote:').pipe(map(res => res as Quote));
   }
 }

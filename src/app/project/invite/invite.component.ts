@@ -28,4 +28,8 @@ export class InviteComponent implements OnInit {
     return user ? user.name : '';
   }
 
+  onClick() {
+    
+  }
+
 }

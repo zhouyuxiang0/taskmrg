@@ -11,6 +11,7 @@ import { NgModule, Optional, SkipSelf } from '@angular/core';
 import { ServicesModule } from '../services/services.module';
 import { SharedModule } from '../shared/shared.module';
 import { SidebarComponent } from './sidebar/sidebar.component';
+import '../utils/debug.util';
 import 'hammerjs';
 
 @NgModule({

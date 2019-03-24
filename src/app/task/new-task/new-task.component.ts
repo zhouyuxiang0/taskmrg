@@ -32,4 +32,8 @@ export class NewTaskComponent implements OnInit {
     console.log(JSON.stringify(this.data.task));
   }
 
+  onClick() {
+    
+  }
+
 }
