@@ -23,6 +23,7 @@
       </mat-form-field>
       <app-image-list-select [useSvgIcon]="true" [cols]="6" [title]="'选择头像:'" [items]="items" formControlName="avatar">
       </app-image-list-select>
+      <app-age-input formControlName="dateOfBirth"></app-age-input>
       <!-- <mat-grid-list cols="6">
         <mat-grid-tile *ngFor="let item of items">
           <mat-icon class="avatar" [svgIcon]='item'></mat-icon>

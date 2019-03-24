@@ -1,3 +1,4 @@
+import { AgeInputComponent } from './age-input/age-input.component';
 import { CommonModule } from '@angular/common';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 import { DirectiveModule } from '../directive/directive.module';
@@ -5,6 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ImageListSelectComponent } from './image-list-select/image-list-select.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -23,7 +25,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { NgModule } from '@angular/core';
 
 @NgModule({
-  declarations: [ConfirmDialogComponent, ImageListSelectComponent],
+  declarations: [ConfirmDialogComponent, ImageListSelectComponent, AgeInputComponent],
   imports: [
     CommonModule,
     MatToolbarModule,
@@ -45,7 +47,8 @@ import { NgModule } from '@angular/core';
     MatSelectModule,
     DirectiveModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatButtonToggleModule
   ],
   exports: [
     CommonModule,
@@ -69,7 +72,9 @@ import { NgModule } from '@angular/core';
     DirectiveModule,
     FormsModule,
     ReactiveFormsModule,
-    ImageListSelectComponent
+    ImageListSelectComponent,
+    AgeInputComponent,
+    MatButtonToggleModule
   ],
   entryComponents: [
     ConfirmDialogComponent
