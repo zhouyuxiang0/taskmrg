@@ -22,12 +22,12 @@ import {
 })
 export class ImageListSelectComponent implements ControlValueAccessor {
 
-  @Input() title = "选择";
+  @Input() title = '选择封面';
   @Input() cols = 6;
   @Input() rowHeight = '64px';
   @Input() items: string[] = [];
   @Input() useSvgIcon = false;
-  @Input() itemWidth = "80px";
+  @Input() itemWidth = '80px';
 
   selected: string;
 
