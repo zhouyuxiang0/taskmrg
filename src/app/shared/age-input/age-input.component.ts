@@ -5,7 +5,8 @@ import {
   filter,
   map,
   merge,
-  startWith
+  startWith,
+  tap
   } from 'rxjs/operators';
 import {
   Component,
@@ -90,6 +91,7 @@ export class AgeInputComponent implements ControlValueAccessor, OnInit, OnDestro
     },
   ];
 
+  dateOfBirth;
   form: FormGroup;
   sub: Subscription;
 
@@ -100,6 +102,7 @@ export class AgeInputComponent implements ControlValueAccessor, OnInit, OnDestro
 
   // tslint:disable-next-line: use-life-cycle-interface
   ngOnInit() {
+    // this.form.get('ageUnit').setValue(AgeUnit.Year);
     this.form = this.fb.group({
       birthday: ['', this.validateDate],
       age: this.fb.group({
@@ -125,27 +128,19 @@ export class AgeInputComponent implements ControlValueAccessor, OnInit, OnDestro
       distinctUntilChanged()
     );
     const ageUnit$ = ageUnit.valueChanges.pipe(
+      tap(d => console.log(d)),
       startWith(ageUnit.value),
       debounceTime(this.debounceTime),
       distinctUntilChanged()
     );
     const age$ = new Observable().pipe(
       // tslint:disable-next-line: variable-name deprecation
-      combineLatest(ageNum$, ageUnit$, (_n: number, _u) => {
-        return this.toDate({
-          age: _n,
-          unit: _u
-        });
-      }),
-      map(d => {
-        return {
-          date: d,
-          from: 'age'
-        };
-      }),
+      combineLatest(ageNum$, ageUnit$, (_n: number, _u) => this.toDate({ age: _n, unit: _u })),
+      map(d => ({ date: d, from: 'age' })),
       filter(_ => this.form.get('age').valid)
     );
     const merged$ = new Observable().pipe(
+// tslint:disable-next-line: deprecation
       merge(birthday$, age$),
       filter(_ => this.form.valid)
     );
@@ -164,7 +159,8 @@ export class AgeInputComponent implements ControlValueAccessor, OnInit, OnDestro
           });
         }
         if (age.unit !== ageUnit.value) {
-          this.selectedUnit = age.unit;
+          this.form.get('ageUnit').setValue(age.unit);
+          // this.selectedUnit = age.unit;
           ageUnit.patchValue(age.unit, {
             emitEvent: false
           });
@@ -180,7 +176,6 @@ export class AgeInputComponent implements ControlValueAccessor, OnInit, OnDestro
         }
       }
     });
-    this.form.get('ageUnit').setValue(AgeUnit.Year);
   }
 
   ngOnDestroy() {
