@@ -24,6 +24,7 @@ export class ProjectItemComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    console.log(this.item);
   }
 
   @HostListener('mouseenter')

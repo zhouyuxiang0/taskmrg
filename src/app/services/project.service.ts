@@ -8,7 +8,8 @@ import {
 import {
   Project
 } from '../domain';
-import { map } from 'rxjs/operators';
+import { map, mergeMap, count, switchMap, mapTo } from 'rxjs/operators';
+import { Observable, from } from 'rxjs';
 
 @Injectable()
 export class ProjectService {
@@ -23,11 +24,46 @@ export class ProjectService {
     @Inject('BASE_CONFIG') private config
   ) {}
 
-  add(project: Project) {
+  // post
+  add(project: Project): Observable<Project> {
     project.id = null;
-    const url = `${this.config.url}/${this.domain}`;
+    const url = `${this.config.uri}/${this.domain}`;
     return this.http.post(url, JSON.stringify(project), this.headers).pipe(
         map((res: any) => res.json())
     );
   }
+
+  // put
+  update(project: Project): Observable<Project> {
+    const url = `${this.config.uri}/${this.domain}/${project.id}`;
+    const toUpdate = {
+      name: project.name,
+      desc: project.desc,
+      coverImg: project.coverImg
+    };
+    return this.http.patch(url, JSON.stringify(toUpdate), this.headers).pipe(
+        map((res: any) => res.json())
+    );
+  }
+
+  // delete
+  del(project: Project): Observable<Project> {
+    const delTasks$ = from(project.taskLists).pipe(
+      mergeMap(listId => this.http.delete(`${this.config.uri}/taskLists/${listId}`)),
+      count()
+    );
+    return delTasks$.pipe(
+      switchMap(_ => this.http.delete(`${this.config.uri}/${this.domain}/${project.id}`)),
+      mapTo(project)
+    );
+  }
+
+  // GET
+  get(userId: string): Observable<Project[]> {
+    const url = `${this.config.uri}/${this.domain}`;
+    return this.http.get(url, {params: {'members_like': userId}}).pipe(
+        map((res: any) => res as Project[])
+    );
+  }
+
 }

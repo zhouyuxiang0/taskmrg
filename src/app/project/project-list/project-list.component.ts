@@ -6,6 +6,7 @@ import { InviteComponent } from '../invite/invite.component';
 import { NewProjectComponent } from '../new-project/new-project.component';
 import { listAnimation } from 'src/app/anims/list.anim';
 import { slideToRight } from 'src/app/anims/router.anim';
+import { ProjectService } from 'src/app/services/project.service';
 
 @Component({
   selector: 'app-project-list',
@@ -21,25 +22,15 @@ export class ProjectListComponent implements OnInit {
 
   @HostBinding('@routeAnim') state;
 
-  projects = [
-    {
-      "id": 1,
-      "name": "企业协作平台",
-      "desc": "这是一个企业内部项目",
-      "coverImg": "assets/img/covers/0.jpg"
-    }, {
-      "id": 2,
-      "name": "自动化测试项目",
-      "desc": "这是一个企业内部项目",
-      "coverImg": "assets/img/covers/1.jpg"
-    },
-  ];
+  projects;
   constructor(
     private dialog: MatDialog,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    private service$: ProjectService
   ) { }
 
   ngOnInit() {
+    this.service$.get('1').subscribe(projects => this.projects = projects);
   }
 
   openNewProjectDialog() {
