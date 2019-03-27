@@ -1,19 +1,10 @@
-import {
-  combineLatest,
-  debounceTime,
-  distinctUntilChanged,
-  filter,
-  map,
-  merge,
-  startWith,
-  tap
-  } from 'rxjs/operators';
+import { combineLatest, merge } from 'rxjs';
 import {
   Component,
   forwardRef,
+  Input,
   OnDestroy,
-  OnInit,
-  Input
+  OnInit
   } from '@angular/core';
 import {
   ControlValueAccessor,
@@ -24,6 +15,21 @@ import {
   NG_VALUE_ACCESSOR,
   Validators
   } from '@angular/forms';
+import {
+  DateAdapter,
+  MAT_DATE_FORMATS,
+  MAT_DATE_LOCALE,
+  MAT_NATIVE_DATE_FORMATS,
+  NativeDateAdapter
+  } from '@angular/material/core';
+import {
+  debounceTime,
+  distinctUntilChanged,
+  filter,
+  map,
+  startWith,
+  tap
+  } from 'rxjs/operators';
 import {
   differenceInDays,
   differenceInMonths,
@@ -64,6 +70,12 @@ export interface Age {
     provide: NG_VALIDATORS,
     useExisting: forwardRef(() => AgeInputComponent),
     multi: true
+  }, {
+    provide: MAT_DATE_LOCALE, useValue: 'zh-Hans'
+  }, {
+    provide: DateAdapter, useClass: NativeDateAdapter
+  }, {
+    provide: MAT_DATE_FORMATS, useValue: MAT_NATIVE_DATE_FORMATS
   }]
 })
 export class AgeInputComponent implements ControlValueAccessor, OnInit, OnDestroy {
@@ -74,8 +86,8 @@ export class AgeInputComponent implements ControlValueAccessor, OnInit, OnDestro
   @Input() monthsBottom = 1;
   @Input() yearsTop = 150;
   @Input() yearsBottom = 1;
-  @Input() format = 'YYY-MM-DD';
-  @Input() debounceTime = 3000;
+  @Input() format = 'YYYY/MM/DD';
+  @Input() debounceTime = 300;
   selectedUnit = AgeUnit.Year;
   ageUnits = [{
       value: AgeUnit.Year,
@@ -103,11 +115,13 @@ export class AgeInputComponent implements ControlValueAccessor, OnInit, OnDestro
   // tslint:disable-next-line: use-life-cycle-interface
   ngOnInit() {
     // this.form.get('ageUnit').setValue(AgeUnit.Year);
+    const initDate = this.dateOfBirth ? this.dateOfBirth : format((subYears(Date.now(), 30)), 'YYYY-MM-DD');
+    const initAge = this.toAge(initDate);
     this.form = this.fb.group({
-      birthday: ['', this.validateDate],
+      birthday: [initDate, this.validateDate],
       age: this.fb.group({
-        ageNum: [],
-        ageUnit: [AgeUnit.Year]
+        ageNum: [initAge.age],
+        ageUnit: [initAge.unit]
       }, {
         validator: this.validateAge('ageNum', 'ageUnit')
       })
@@ -115,6 +129,7 @@ export class AgeInputComponent implements ControlValueAccessor, OnInit, OnDestro
     const birthday = this.form.get('birthday');
     const ageNum = this.form.get('age').get('ageNum');
     const ageUnit = this.form.get('age').get('ageUnit');
+
     const birthday$ = birthday.valueChanges.pipe(
       map(d => ({
         date: d,
@@ -122,56 +137,44 @@ export class AgeInputComponent implements ControlValueAccessor, OnInit, OnDestro
       })),
       filter(_ => birthday.valid)
     );
-    const ageNum$ = ageUnit.valueChanges.pipe(
+
+    const ageNum$ = ageNum.valueChanges.pipe(
       startWith(ageNum.value),
       debounceTime(this.debounceTime),
       distinctUntilChanged()
     );
+
     const ageUnit$ = ageUnit.valueChanges.pipe(
-      tap(d => console.log(d)),
       startWith(ageUnit.value),
       debounceTime(this.debounceTime),
       distinctUntilChanged()
     );
-    const age$ = new Observable().pipe(
-      // tslint:disable-next-line: variable-name deprecation
-      combineLatest(ageNum$, ageUnit$, (_n: number, _u) => this.toDate({ age: _n, unit: _u })),
+
+    const age$ = combineLatest(ageNum$, ageUnit$).pipe(
+      map(([num, unit]) => ([this.toDate({ age: num, unit })])),
       map(d => ({ date: d, from: 'age' })),
       filter(_ => this.form.get('age').valid)
     );
-    const merged$ = new Observable().pipe(
-// tslint:disable-next-line: deprecation
-      merge(birthday$, age$),
+
+    const merged$ = merge(birthday$, age$).pipe(
       filter(_ => this.form.valid)
     );
-    this.sub = merged$.subscribe((d: {
-      date: any;
-      from: string;
-  } | {
-      date: string;
-      from: string;
-  }) => {
+
+    this.sub = merged$.subscribe((d: {date: any; from: string; }) => {
       const age = this.toAge(d.date);
       if (d.from === 'birthday') {
-        if (age.age !== ageNum.value) {
-          ageNum.patchValue(age.age, {
-            emitEvent: false
-          });
+        if (age.age === ageNum.value && age.unit === ageUnit.value) {
+          return;
         }
-        if (age.unit !== ageUnit.value) {
-          this.form.get('ageUnit').setValue(age.unit);
-          // this.selectedUnit = age.unit;
-          ageUnit.patchValue(age.unit, {
-            emitEvent: false
-          });
-        }
+        ageUnit.patchValue(age.unit, {emitEvent: false, emitModelToViewChange: true, emitViewToModelChange: true});
+        ageNum.patchValue(age.age, {emitEvent: false});
+        this.selectedUnit = age.unit;
         this.propagateChange(d.date);
       } else {
-        const ageToCompare = this.toAge(birthday.value);
+        const ageToCompare = this.toAge(this.form.get('birthday').value);
         if (age.age !== ageToCompare.age || age.unit !== ageToCompare.unit) {
-          birthday.patchValue(d.date, {
-            emitEvent: false
-          });
+          this.form.get('birthday').patchValue(d.date[0], { emitEvent: false });
+          console.log(this.form.get('birthday'));
           this.propagateChange(d.date);
         }
       }
@@ -237,7 +240,11 @@ export class AgeInputComponent implements ControlValueAccessor, OnInit, OnDestro
 
   writeValue(obj: any): void {
     if (obj) {
-      this.form.get('birthday').patchValue(format(obj, this.format));
+      const date = format(obj, this.format);
+      this.form.get('birthday').patchValue(date);
+      const age = this.toAge(date);
+      this.form.get('age').get('ageNum').patchValue(age.age);
+      this.form.get('age').get('ageUnit').patchValue(age.unit);
     }
   }
 
@@ -252,17 +259,22 @@ export class AgeInputComponent implements ControlValueAccessor, OnInit, OnDestro
   toAge(dateStr: string): Age {
     const date = parse(dateStr);
     const now = Date.now();
-    return isBefore(subDays(now, this.daysTop), date) ? {
+    if (isBefore(subDays(now, this.daysTop), date)) {
+      return {
         age: differenceInDays(now, date),
         unit: AgeUnit.Day
-      } :
-      isBefore(subMonths(now, this.monthsTop), date) ? {
+      };
+    } else if (isBefore(subMonths(now, this.monthsTop), date)) {
+      return {
         age: differenceInMonths(now, date),
         unit: AgeUnit.Month
-      } : {
+      };
+    } else {
+      return {
         age: differenceInYears(now, date),
         unit: AgeUnit.Year
       };
+    }
   }
 
   toDate(age: Age): string {

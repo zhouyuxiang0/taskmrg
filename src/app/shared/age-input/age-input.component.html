@@ -3,6 +3,7 @@
     <mat-form-field>
       <input type="text" matInput [matDatepicker]="birthPicker" formControlName="birthday" placeholder="出生日期">
       <mat-datepicker-toggle matSuffix [for]="birthPicker"></mat-datepicker-toggle>
+      <mat-datepicker #dp></mat-datepicker>
       <mat-error>日期不正确</mat-error>
     </mat-form-field>
     <mat-datepicker touchUi="true" #birthPicker></mat-datepicker>
