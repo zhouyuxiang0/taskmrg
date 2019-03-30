@@ -12,7 +12,7 @@ import { map, mergeMap, count, switchMap, mapTo, reduce } from 'rxjs/operators';
 import { Observable, from, concat } from 'rxjs';
 
 @Injectable()
-export class ProjectService {
+export class TaskListService {
   private readonly domain = 'taskList';
   private headers = {
     headers: new HttpHeaders({
@@ -73,7 +73,7 @@ export class ProjectService {
     .pipe(
       map(res => res)
     );
-    return concat(drag$,drop$).pipe(
+    return concat(drag$, drop$).pipe(
       reduce((arrs, list) => [...arrs, list], [])
     );
   }
