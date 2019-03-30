@@ -1,15 +1,14 @@
 import {
-  HttpClient, HttpHeaders
-} from '@angular/common/http';
-import {
-  Inject,
-  Injectable
-} from '@angular/core';
-import {
-  Project
-} from '../domain';
-import { map, mergeMap, count, switchMap, mapTo } from 'rxjs/operators';
-import { Observable, from } from 'rxjs';
+  count,
+  map,
+  mapTo,
+  mergeMap,
+  switchMap
+  } from 'rxjs/operators';
+import { from, Observable } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Inject, Injectable } from '@angular/core';
+import { Project } from '../domain';
 
 @Injectable()
 export class ProjectService {

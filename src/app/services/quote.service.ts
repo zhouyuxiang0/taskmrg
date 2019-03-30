@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, Inject } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
+import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { Quote } from '../domain/quote.model';
-import { map } from 'rxjs/operators';
 
 @Injectable()
 export class QuoteService {

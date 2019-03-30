@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ModuleWithProviders, NgModule } from '@angular/core';
-import { QuoteService } from './quote.service';
 import { ProjectService } from './project.service';
+import { QuoteService } from './quote.service';
 
 @NgModule()
 export class ServicesModule {

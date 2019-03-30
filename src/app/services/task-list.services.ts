@@ -6,10 +6,10 @@ import {
   Injectable
 } from '@angular/core';
 import {
-  Project
+  Project, TaskList
 } from '../domain';
-import { map, mergeMap, count, switchMap, mapTo } from 'rxjs/operators';
-import { Observable, from } from 'rxjs';
+import { map, mergeMap, count, switchMap, mapTo, reduce } from 'rxjs/operators';
+import { Observable, from, concat } from 'rxjs';
 
 @Injectable()
 export class ProjectService {
@@ -48,21 +48,33 @@ export class ProjectService {
 
   // delete
   del(tasklist: Project): Observable<Project> {
-    const delTasks$ = from(tasklist.taskLists).pipe(
-      mergeMap(listId => this.http.delete(`${this.config.uri}/taskLists/${listId}`)),
-      count()
-    );
-    return delTasks$.pipe(
-      switchMap(_ => this.http.delete(`${this.config.uri}/${this.domain}/${tasklist.id}`)),
+    const uri = `${this.config.uri}/taskLists/${tasklist.id}`;
+    return this.http.delete(uri).pipe(
       mapTo(tasklist)
     );
   }
 
   // GET
-  get(userId: string): Observable<Project[]> {
+  get(projectId: string): Observable<TaskList[]> {
     const url = `${this.config.uri}/${this.domain}`;
-    return this.http.get(url, {params: {'members_like': userId}}).pipe(
-        map((res: any) => res as Project[])
+    return this.http.get(url, {params: {projectId}}).pipe(
+        map((res: any) => res as TaskList[])
+    );
+  }
+
+  swapOrder(src: TaskList, target: TaskList): Observable<TaskList[]> {
+    const dragUri = `${this.config.uri}/${this.domain}/${src.id}`;
+    const dropUri = `${this.config.uri}/${this.domain}/${target.id}`;
+    const drag$ = this.http.patch(dragUri, JSON.stringify({order: target.order}), this.headers)
+    .pipe(
+      map(res => res)
+    );
+    const drop$ = this.http.patch(dropUri, JSON.stringify({order: src.order}), this.headers)
+    .pipe(
+      map(res => res)
+    );
+    return concat(drag$,drop$).pipe(
+      reduce((arrs, list) => [...arrs, list], [])
     );
   }
 
