@@ -3,12 +3,13 @@ import {
     map,
     mapTo,
     mergeMap,
-    switchMap
+    switchMap,
+    reduce
     } from 'rxjs/operators';
 import { from, Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
-import { Task } from '../domain';
+import { Task, TaskList } from '../domain';
 
 @Injectable()
 export class TaskService {
@@ -51,25 +52,50 @@ export class TaskService {
 
   // delete
   del(task: Task): Observable < Task > {
-    const delTasks$ = from(task.taskLists).pipe(
-      mergeMap(listId => this.http.delete(`${this.config.uri}/taskLists/${listId}`)),
-      count()
-    );
-    return delTasks$.pipe(
-      switchMap(_ => this.http.delete(`${this.config.uri}/${this.domain}/${task.id}`)),
+    const uri = `${this.config.uri}/taskLists/${task.id}`;
+    return this.http.delete(uri).pipe(
       mapTo(task)
     );
   }
 
   // GET
-  get(userId: string): Observable < Task[] > {
+  get(taskListId: string): Observable < Task[] > {
     const url = `${this.config.uri}/${this.domain}`;
     return this.http.get(url, {
       params: {
-        'members_like': userId
+        taskListId
       }
     }).pipe(
       map((res: any) => res as Task[])
+    );
+  }
+
+  getByLists(lists: TaskList[]): Observable<Task[]> {
+    return from(lists).pipe(
+      mergeMap(list => this.get(list.id)),
+      reduce((tasks, t: Task[]) => [...tasks, ...t], [])
+    );
+  }
+
+  complete(task: Task): Observable < Task > {
+    const url = `${this.config.uri}/${this.domain}/${task.id}`;
+    return this.http.patch(url, JSON.stringify({completed: !task.completed}), this.headers).pipe(
+      map((res: any) => res.json())
+    );
+  }
+
+  move(taskId: string, taskListId: string): Observable < Task[] > {
+    const url = `${this.config.uri}/${this.domain}/${taskId}`;
+    return this.http.patch(url, JSON.stringify({taskListId}), this.headers).pipe(
+      map((res: any) => res)
+    );
+  }
+
+  moveAll(srcListId: string, targetListId: string): Observable <Task[] > {
+    return this.get(srcListId).pipe(
+      mergeMap(tasks => from(tasks)),
+      mergeMap(task => this.move(task.id, targetListId)),
+      reduce((arr, x) =>  [...arr, x], [])
     );
   }
 

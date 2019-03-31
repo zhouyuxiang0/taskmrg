@@ -35,9 +35,8 @@ export class ProjectListComponent implements OnInit {
 
   openNewProjectDialog() {
     const dialogRef = this.dialog.open(NewProjectComponent, { data: { title: '新增项目' } });
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
-      this.projects = [...this.projects, { id: 3, name: "you一个新项目", desc: "you一个新项目", coverImg: "assets/img/covers/8.jpg" }, { id: 4, name: "一个新项目", desc: "这是一个新项目", coverImg: "assets/img/covers/9.jpg" }];
+    dialogRef.afterClosed().subscribe(project => {
+      this.service$.add(project);
       this.cd.markForCheck();
     });
   }
