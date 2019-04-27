@@ -7,11 +7,17 @@
     <mat-form-field class="full-width">
       <input type="text" matInput placeholder="项目描述" formControlName="desc">
     </mat-form-field>
-    <app-image-list-select [useSvgIcon]="false" [cols]="6" [title]="'选择封面:'" [items]="coverImages" formControlName="coverImg">
+    <app-image-list-select
+      [useSvgIcon]="false"
+      [cols]="6"
+      [title]="'选择封面:'"
+      [items]="coverImages"
+      formControlName="coverImg"
+    >
     </app-image-list-select>
   </div>
   <div mat-dialog-actions>
-    <button type="submit" mat-raised-button color="primary" [disabled]="!form">保存</button>
+    <button type="submit" mat-raised-button color="primary" [disabled]="!form.valid">保存</button>
     <button type="button" mat-button mat-dialog-close>关闭</button>
   </div>
 </form>

@@ -1,4 +1,4 @@
-import { isDate, isValid, isFuture, differenceInYears, parse } from "date-fns";
+import { differenceInYears, isDate, isFuture, isValid, parse } from "date-fns";
 
 export const isValidDate = (val: string): boolean => {
     const date = parse(val);
@@ -6,4 +6,4 @@ export const isValidDate = (val: string): boolean => {
     && isValid(date)
     && !isFuture(date)
     && differenceInYears(Date.now(), date) < 150;
-}
+};

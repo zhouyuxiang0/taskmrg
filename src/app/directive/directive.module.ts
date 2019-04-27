@@ -5,7 +5,7 @@ import { NgModule } from '@angular/core';
 
 @NgModule({
   declarations: [
-    DragDirective, 
+    DragDirective,
     DropDirective
   ],
   exports: [

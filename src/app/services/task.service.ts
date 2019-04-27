@@ -1,15 +1,15 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Inject, Injectable } from '@angular/core';
+import { Observable, from } from 'rxjs';
+import { Task, TaskList } from '../domain';
 import {
     count,
     map,
     mapTo,
     mergeMap,
-    switchMap,
-    reduce
-    } from 'rxjs/operators';
-import { from, Observable } from 'rxjs';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Inject, Injectable } from '@angular/core';
-import { Task, TaskList } from '../domain';
+    reduce,
+    switchMap
+} from 'rxjs/operators';
 
 @Injectable()
 export class TaskService {
@@ -40,7 +40,7 @@ export class TaskService {
       desc: task.desc,
       priority: task.priority,
       dueDate: task.dueDate,
-      reminder: task.remark,
+      reminder: task.reminder,
       ownerId: task.ownerId,
       participantIds: task.participantIds,
       remark: task.remark

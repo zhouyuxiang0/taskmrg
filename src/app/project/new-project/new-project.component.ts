@@ -1,6 +1,6 @@
-import { Component, OnInit, Inject, ChangeDetectionStrategy } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 
 @Component({
   selector: 'app-new-project',
@@ -33,18 +33,16 @@ export class NewProjectComponent implements OnInit {
         desc: [],
         coverImg: [this.data.img]
       });
-      this.title = '创建项目:';
+      this.title = '创建项目: ';
     }
-    
-    this.title = this.data.title;
-    console.log(this.data);
   }
 
   onSubmit({value, valid}, ev: Event) {
+    ev.preventDefault();
     if (!valid) {
       return;
     }
-    this.dialogRef.close('recived message');
+    this.dialogRef.close({name: value.name, desc: value.desc ? value.desc : null, coverImg: value.coverImg});
   }
 
 }

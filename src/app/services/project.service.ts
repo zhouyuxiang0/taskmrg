@@ -1,17 +1,19 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Inject, Injectable } from '@angular/core';
+import { Observable, from } from 'rxjs';
 import {
   count,
   map,
   mapTo,
   mergeMap,
   switchMap
-  } from 'rxjs/operators';
-import { from, Observable } from 'rxjs';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Inject, Injectable } from '@angular/core';
+} from 'rxjs/operators';
+
 import { Project } from '../domain';
 
 @Injectable()
 export class ProjectService {
+  // restful api 资源对象
   private readonly domain = 'projects';
   private headers = {
     headers: new HttpHeaders({
@@ -25,29 +27,29 @@ export class ProjectService {
 
   // post
   add(project: Project): Observable<Project> {
-    project.id = null;
     const url = `${this.config.uri}/${this.domain}`;
     return this.http.post(url, JSON.stringify(project), this.headers).pipe(
-        map((res: any) => res.json())
+        map((res: any) => res)
     );
   }
 
   // put
   update(project: Project): Observable<Project> {
     const url = `${this.config.uri}/${this.domain}/${project.id}`;
+    // 使用put 会将所有project更新 使用patch 可以更新部分属性
     const toUpdate = {
       name: project.name,
       desc: project.desc,
       coverImg: project.coverImg
     };
     return this.http.patch(url, JSON.stringify(toUpdate), this.headers).pipe(
-        map((res: any) => res.json())
+        map((res: any) => res)
     );
   }
 
   // delete
   del(project: Project): Observable<Project> {
-    const delTasks$ = from(project.taskLists).pipe(
+    const delTasks$ = from(project.taskLists ? project.taskLists : []).pipe(
       mergeMap(listId => this.http.delete(`${this.config.uri}/taskLists/${listId}`)),
       count()
     );
@@ -60,7 +62,7 @@ export class ProjectService {
   // GET
   get(userId: string): Observable<Project[]> {
     const url = `${this.config.uri}/${this.domain}`;
-    return this.http.get(url, {params: {'members_like': userId}}).pipe(
+    return this.http.get(url, {params: {members_like: userId}}).pipe(
         map((res: any) => res as Project[])
     );
   }

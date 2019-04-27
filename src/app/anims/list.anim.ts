@@ -9,7 +9,6 @@ import {
   trigger
 } from '@angular/animations';
 
-
 export const listAnimation = trigger('listAnim', [
   // transition('* => *', [
   //   query(':enter', [
@@ -22,12 +21,12 @@ export const listAnimation = trigger('listAnim', [
   //   ], { optional: true }),
   // ])
   transition('* => *', [
-    query(":leave", [
+    query(':leave', [
       stagger(100, [
         animate('5s', style({ opacity: 0 }))
       ])
     ], { optional: true }),
-    query(":enter", [
+    query(':enter', [
       style({ opacity: 0 }),
       stagger(100, [
         animate('5s', style({ opacity: 1 }))
