@@ -1,9 +1,11 @@
-import { CommonModule } from '@angular/common';
 import { ModuleWithProviders, NgModule } from '@angular/core';
+
+import { CommonModule } from '@angular/common';
 import { ProjectService } from './project.service';
 import { QuoteService } from './quote.service';
 import { TaskListService } from './task-list.services';
 import { TaskService } from './task.service';
+import { UserService } from './user.service';
 
 @NgModule()
 export class ServicesModule {
@@ -14,7 +16,8 @@ export class ServicesModule {
         QuoteService,
         ProjectService,
         TaskListService,
-        TaskService
+        TaskService,
+        UserService
       ]
     };
   }
