@@ -1,8 +1,11 @@
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatChipsModule, MatNativeDateModule } from '@angular/material/';
+
 import { AgeInputComponent } from './age-input/age-input.component';
+import { ChipsListComponent } from './chips-list/chips-list.component';
 import { CommonModule } from '@angular/common';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 import { DirectiveModule } from '../directive/directive.module';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ImageListSelectComponent } from './image-list-select/image-list-select.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
@@ -16,17 +19,20 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
-import { MatNativeDateModule } from '@angular/material/';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { NgModule } from '@angular/core';
-import { ChipsListComponent } from './chips-list/chips-list.component';
 
 @NgModule({
-  declarations: [ConfirmDialogComponent, ImageListSelectComponent, AgeInputComponent, ChipsListComponent],
+  declarations: [
+    ConfirmDialogComponent,
+    ImageListSelectComponent,
+    AgeInputComponent,
+    ChipsListComponent
+  ],
   imports: [
     CommonModule,
     MatToolbarModule,
@@ -49,7 +55,8 @@ import { ChipsListComponent } from './chips-list/chips-list.component';
     DirectiveModule,
     FormsModule,
     ReactiveFormsModule,
-    MatButtonToggleModule
+    MatButtonToggleModule,
+    MatChipsModule
   ],
   exports: [
     CommonModule,
@@ -73,9 +80,11 @@ import { ChipsListComponent } from './chips-list/chips-list.component';
     DirectiveModule,
     FormsModule,
     ReactiveFormsModule,
-    ImageListSelectComponent,
     AgeInputComponent,
-    MatButtonToggleModule
+    MatButtonToggleModule,
+    MatChipsModule,
+    ImageListSelectComponent,
+    ChipsListComponent
   ],
   entryComponents: [
     ConfirmDialogComponent

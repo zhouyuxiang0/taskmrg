@@ -11,8 +11,7 @@ import {
   FormControl,
   FormGroup,
   NG_VALIDATORS,
-  NG_VALUE_ACCESSOR,
-  Validators
+  NG_VALUE_ACCESSOR
 } from '@angular/forms';
 import {
   DateAdapter,
@@ -21,15 +20,13 @@ import {
   MAT_NATIVE_DATE_FORMATS,
   NativeDateAdapter
 } from '@angular/material/core';
-import { Observable, Subscription } from 'rxjs';
 import { combineLatest, merge } from 'rxjs';
 import {
   debounceTime,
   distinctUntilChanged,
   filter,
   map,
-  startWith,
-  tap
+  startWith
 } from 'rxjs/operators';
 import {
   differenceInDays,
@@ -37,15 +34,13 @@ import {
   differenceInYears,
   format,
   isBefore,
-  isFuture,
-  isValid,
   parse,
   subDays,
   subMonths,
   subYears
 } from 'date-fns';
 
-import { isDate } from '@angular/common/src/i18n/format_date';
+import { Subscription } from 'rxjs';
 import { isValidDate } from 'src/app/utils/date.util';
 
 export enum AgeUnit {
@@ -111,6 +106,8 @@ export class AgeInputComponent implements ControlValueAccessor, OnInit, OnDestro
   constructor(
     private fb: FormBuilder
   ) {}
+  // 这里是做一个空函数体，真正使用的方法在 registerOnChange 中
+  // 由框架注册，然后我们使用它把变化发回表单
   private propagateChange = (_: any) => {};
 
   // tslint:disable-next-line: use-life-cycle-interface

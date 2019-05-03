@@ -28,7 +28,7 @@ export class ProjectListComponent implements OnInit, OnDestroy {
   @HostBinding('@routeAnim') state;
 
   projects;
-  sub: Subscription
+  sub: Subscription;
   constructor(
     private dialog: MatDialog,
     private cd: ChangeDetectorRef,
@@ -72,7 +72,7 @@ export class ProjectListComponent implements OnInit, OnDestroy {
   }
 
   launchInviteDialog() {
-    const dialogRef = this.dialog.open(InviteComponent);
+    const dialogRef = this.dialog.open(InviteComponent, {data: {members: []}});
   }
 
   // 编辑项目dialog
