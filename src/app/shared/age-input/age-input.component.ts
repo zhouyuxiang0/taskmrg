@@ -1,11 +1,10 @@
-import { combineLatest, merge } from 'rxjs';
 import {
   Component,
-  forwardRef,
   Input,
   OnDestroy,
-  OnInit
-  } from '@angular/core';
+  OnInit,
+  forwardRef
+} from '@angular/core';
 import {
   ControlValueAccessor,
   FormBuilder,
@@ -14,14 +13,16 @@ import {
   NG_VALIDATORS,
   NG_VALUE_ACCESSOR,
   Validators
-  } from '@angular/forms';
+} from '@angular/forms';
 import {
   DateAdapter,
   MAT_DATE_FORMATS,
   MAT_DATE_LOCALE,
   MAT_NATIVE_DATE_FORMATS,
   NativeDateAdapter
-  } from '@angular/material/core';
+} from '@angular/material/core';
+import { Observable, Subscription } from 'rxjs';
+import { combineLatest, merge } from 'rxjs';
 import {
   debounceTime,
   distinctUntilChanged,
@@ -29,7 +30,7 @@ import {
   map,
   startWith,
   tap
-  } from 'rxjs/operators';
+} from 'rxjs/operators';
 import {
   differenceInDays,
   differenceInMonths,
@@ -42,10 +43,10 @@ import {
   subDays,
   subMonths,
   subYears
-  } from 'date-fns';
+} from 'date-fns';
+
 import { isDate } from '@angular/common/src/i18n/format_date';
 import { isValidDate } from 'src/app/utils/date.util';
-import { Observable, Subscription } from 'rxjs';
 
 export enum AgeUnit {
   Year = 0,

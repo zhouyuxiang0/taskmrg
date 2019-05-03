@@ -1,5 +1,7 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
 
+import { AuthGuardService } from './auth-guard.service';
+import { AuthService } from './auth.service';
 import { CommonModule } from '@angular/common';
 import { ProjectService } from './project.service';
 import { QuoteService } from './quote.service';
@@ -17,7 +19,9 @@ export class ServicesModule {
         ProjectService,
         TaskListService,
         TaskService,
-        UserService
+        UserService,
+        AuthService,
+        AuthGuardService
       ]
     };
   }

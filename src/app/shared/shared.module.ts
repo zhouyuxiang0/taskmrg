@@ -23,9 +23,10 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { NgModule } from '@angular/core';
+import { ChipsListComponent } from './chips-list/chips-list.component';
 
 @NgModule({
-  declarations: [ConfirmDialogComponent, ImageListSelectComponent, AgeInputComponent],
+  declarations: [ConfirmDialogComponent, ImageListSelectComponent, AgeInputComponent, ChipsListComponent],
   imports: [
     CommonModule,
     MatToolbarModule,
