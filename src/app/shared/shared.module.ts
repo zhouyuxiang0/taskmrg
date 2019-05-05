@@ -6,6 +6,7 @@ import { ChipsListComponent } from './chips-list/chips-list.component';
 import { CommonModule } from '@angular/common';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 import { DirectiveModule } from '../directive/directive.module';
+import { IdentityInputComponent } from './identity-input/identity-input.component';
 import { ImageListSelectComponent } from './image-list-select/image-list-select.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
@@ -25,13 +26,16 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { NgModule } from '@angular/core';
+import { AreaListComponent } from './area-list/area-list.component';
 
 @NgModule({
   declarations: [
     ConfirmDialogComponent,
     ImageListSelectComponent,
     AgeInputComponent,
-    ChipsListComponent
+    ChipsListComponent,
+    IdentityInputComponent,
+    AreaListComponent
   ],
   imports: [
     CommonModule,
@@ -84,7 +88,8 @@ import { NgModule } from '@angular/core';
     MatButtonToggleModule,
     MatChipsModule,
     ImageListSelectComponent,
-    ChipsListComponent
+    ChipsListComponent,
+    IdentityInputComponent
   ],
   entryComponents: [
     ConfirmDialogComponent
