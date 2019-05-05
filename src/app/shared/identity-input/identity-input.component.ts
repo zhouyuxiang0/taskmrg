@@ -48,8 +48,8 @@ export class IdentityInputComponent implements OnInit, OnDestroy, ControlValueAc
       return {
         identityType: _type,
         identityNo: _no
-      }
-    })
+      };
+    });
   }
 
   ngOnDestroy() {
