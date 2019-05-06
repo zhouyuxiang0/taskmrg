@@ -2,7 +2,7 @@
   <mat-select
     placeholder="证件类型"
     (change)="onIdTypeChange($event.value)"
-    [(ngModel)]="identity.identityTyle"
+    [(ngModel)]="identity.identityType"
   >
     <mat-option 
       *ngFor="let type of identityTypes"
