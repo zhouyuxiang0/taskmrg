@@ -1,7 +1,8 @@
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatChipsModule, MatNativeDateModule } from '@angular/material/';
+import { MatChipsModule, MatNativeDateModule, MatTabsModule } from '@angular/material/';
 
 import { AgeInputComponent } from './age-input/age-input.component';
+import { AreaListComponent } from './area-list/area-list.component';
 import { ChipsListComponent } from './chips-list/chips-list.component';
 import { CommonModule } from '@angular/common';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
@@ -26,7 +27,6 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { NgModule } from '@angular/core';
-import { AreaListComponent } from './area-list/area-list.component';
 
 @NgModule({
   declarations: [
@@ -60,7 +60,8 @@ import { AreaListComponent } from './area-list/area-list.component';
     FormsModule,
     ReactiveFormsModule,
     MatButtonToggleModule,
-    MatChipsModule
+    MatChipsModule,
+    MatTabsModule
   ],
   exports: [
     CommonModule,
@@ -87,9 +88,11 @@ import { AreaListComponent } from './area-list/area-list.component';
     AgeInputComponent,
     MatButtonToggleModule,
     MatChipsModule,
+    MatTabsModule,
     ImageListSelectComponent,
     ChipsListComponent,
-    IdentityInputComponent
+    IdentityInputComponent,
+    AreaListComponent
   ],
   entryComponents: [
     ConfirmDialogComponent

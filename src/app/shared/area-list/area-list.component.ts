@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, forwardRef } from '@angular/core';
 import { ControlValueAccessor, FormControl, NG_VALIDATORS, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Observable, Subject, Subscription, combineLatest, of } from 'rxjs';
+import { getAreaByCity, getCitiesByProvince, getProvinces } from 'src/app/utils/area.util';
 import { map, startWith } from 'rxjs/operators';
 
 import { Address } from '../../domain/user.model';
@@ -24,6 +25,7 @@ import { Address } from '../../domain/user.model';
 })
 export class AreaListComponent implements OnInit, OnDestroy, ControlValueAccessor {
 
+  // 选中的值
   _address: Address = {
     province: '',
     city: '',
@@ -34,21 +36,23 @@ export class AreaListComponent implements OnInit, OnDestroy, ControlValueAccesso
   _city = new Subject();
   _district = new Subject();
   _street = new Subject();
-  provinces$: Observable<string>;
-  cities$: Observable<string>;
-  districts$: Observable<string>;
+  // 下拉选项
+  provinces$: Observable<string[]>;
+  cities$: Observable<string[]>;
+  districts$: Observable<string[]>;
   sub: Subscription;
   private propagateChange = (_: any) => {};
   constructor() { }
 
   ngOnInit() {
-    const province$ = this._province.asObservable().pipe(startWith(''));
-    const city$ = this._city.asObservable().pipe(startWith(''));
-    const district$ = this._district.asObservable().pipe(startWith(''));
-    const street$ = this._street.asObservable().pipe(startWith(''));
+    const province$ = this._province.asObservable().pipe(startWith('')) as Observable<string>;
+    const city$ = this._city.asObservable().pipe(startWith('')) as Observable<string>;
+    const district$ = this._district.asObservable().pipe(startWith('')) as Observable<string>;
+    const street$ = this._street.asObservable().pipe(startWith('')) as Observable<string>;
     const val$ = combineLatest(province$, city$, district$, street$).pipe(
       map(
         ([_p, _c, _d, _s]) => {
+          console.log(123);
           return {
             province: _p,
             city: _c,
@@ -63,8 +67,9 @@ export class AreaListComponent implements OnInit, OnDestroy, ControlValueAccesso
     });
     this.provinces$ = of(getProvinces());
     this.cities$ = province$.pipe(
-      map(p => {
-        getCitiesByProvince(p);
+      map((p: string): string[] => {
+        console.log(p);
+        return getCitiesByProvince(p);
       })
     );
     this.districts$ = combineLatest(province$, city$).pipe(
@@ -79,8 +84,21 @@ export class AreaListComponent implements OnInit, OnDestroy, ControlValueAccesso
   }
 
   writeValue(obj: Address) {
+    console.log(obj);
     if (obj) {
       this._address = obj;
+      if (this._address.province) {
+        this._province.next(this._address.province);
+      }
+      if (this._address.city) {
+        this._city.next(this._address.city);
+      }
+      if (this._address.district) {
+        this._district.next(this._address.district);
+      }
+      if (this._address.street) {
+        this._street.next(this._address.street);
+      }
     }
   }
 
@@ -100,7 +118,7 @@ export class AreaListComponent implements OnInit, OnDestroy, ControlValueAccesso
     }
     return {
       addressInvalid: true
-    }
+    };
   }
 
   onProvinceChange() {
