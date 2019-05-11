@@ -301,6 +301,31 @@
     lodash "^4.17.11"
     to-fast-properties "^2.0.0"
 
+"@ngrx/core@1.2.0":
+  version "1.2.0"
+  resolved "https://registry.npm.taobao.org/@ngrx/core/download/@ngrx/core-1.2.0.tgz#882b46abafa2e0e6d887cb71a1b2c2fa3e6d0dc6"
+  integrity sha1-iCtGq6+i4ObYh8txobLC+j5tDcY=
+
+"@ngrx/effects@2.0.4":
+  version "2.0.4"
+  resolved "https://registry.npm.taobao.org/@ngrx/effects/download/@ngrx/effects-2.0.4.tgz#418eee5e1032fa66de5bbf1855653bb1951f12a4"
+  integrity sha1-QY7uXhAy+mbeW78YVWU7sZUfEqQ=
+
+"@ngrx/router-store@1.2.6":
+  version "1.2.6"
+  resolved "https://registry.npm.taobao.org/@ngrx/router-store/download/@ngrx/router-store-1.2.6.tgz#a2eb0ca515e9b367781f1030250dd64bb73c086b"
+  integrity sha1-ousMpRXps2d4HxAwJQ3WS7c8CGs=
+
+"@ngrx/store-devtools@3.2.4":
+  version "3.2.4"
+  resolved "https://registry.npm.taobao.org/@ngrx/store-devtools/download/@ngrx/store-devtools-3.2.4.tgz#2ce4d13bf34848a9e51ec87e3b125ed67b51e550"
+  integrity sha1-LOTRO/NISKnlHsh+OxJe1ntR5VA=
+
+"@ngrx/store@2.2.3":
+  version "2.2.3"
+  resolved "https://registry.npm.taobao.org/@ngrx/store/download/@ngrx/store-2.2.3.tgz#e7bd1149f1c44208f1cc4744353f0f98a0f1f57b"
+  integrity sha1-570RSfHEQgjxzEdENT8PmKDx9Xs=
+
 "@ngtools/webpack@7.3.5":
   version "7.3.5"
   resolved "http://registry.npm.taobao.org/@ngtools/webpack/download/@ngtools/webpack-7.3.5.tgz#e17bf6b7fc515cfa8a8e285daf64508b46074d0d"

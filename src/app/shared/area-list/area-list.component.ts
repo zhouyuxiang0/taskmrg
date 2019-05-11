@@ -1,26 +1,44 @@
-import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, forwardRef } from '@angular/core';
-import { ControlValueAccessor, FormControl, NG_VALIDATORS, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { Observable, Subject, Subscription, combineLatest, of } from 'rxjs';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  OnDestroy,
+  OnInit,
+  forwardRef
+} from '@angular/core';
+import {
+  ControlValueAccessor,
+  FormBuilder,
+  FormControl,
+  NG_VALIDATORS,
+  NG_VALUE_ACCESSOR
+} from '@angular/forms';
+import {
+  Observable,
+  Subject,
+  Subscription,
+  combineLatest,
+  of
+} from 'rxjs';
 import { getAreaByCity, getCitiesByProvince, getProvinces } from 'src/app/utils/area.util';
 import { map, startWith } from 'rxjs/operators';
 
 import { Address } from '../../domain/user.model';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-area-list',
   templateUrl: './area-list.component.html',
   styleUrls: ['./area-list.component.scss'],
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => AreaListComponent),
-      multi: true
-    }, {
-      provide: NG_VALIDATORS,
-      useExisting: forwardRef(() => AreaListComponent),
-      multi: true
-    }
-  ],
+  providers: [{
+    provide: NG_VALUE_ACCESSOR,
+    useExisting: forwardRef(() => AreaListComponent),
+    multi: true
+  }, {
+    provide: NG_VALIDATORS,
+    useExisting: forwardRef(() => AreaListComponent),
+    multi: true
+  }],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AreaListComponent implements OnInit, OnDestroy, ControlValueAccessor {
@@ -37,18 +55,18 @@ export class AreaListComponent implements OnInit, OnDestroy, ControlValueAccesso
   _district = new Subject();
   _street = new Subject();
   // 下拉选项
-  provinces$: Observable<string[]>;
-  cities$: Observable<string[]>;
-  districts$: Observable<string[]>;
+  provinces$: Observable < string[] > ;
+  cities$: Observable < string[] > ;
+  districts$: Observable < string[] > ;
   sub: Subscription;
   private propagateChange = (_: any) => {};
-  constructor() { }
+  constructor() {}
 
   ngOnInit() {
-    const province$ = this._province.asObservable().pipe(startWith('')) as Observable<string>;
-    const city$ = this._city.asObservable().pipe(startWith('')) as Observable<string>;
-    const district$ = this._district.asObservable().pipe(startWith('')) as Observable<string>;
-    const street$ = this._street.asObservable().pipe(startWith('')) as Observable<string>;
+    const province$ = this._province.asObservable().pipe(startWith('')) as Observable < string > ;
+    const city$ = this._city.asObservable().pipe(startWith('')) as Observable < string > ;
+    const district$ = this._district.asObservable().pipe(startWith('')) as Observable < string > ;
+    const street$ = this._street.asObservable().pipe(startWith('')) as Observable < string > ;
     const val$ = combineLatest(province$, city$, district$, street$).pipe(
       map(
         ([_p, _c, _d, _s]) => {
@@ -65,7 +83,7 @@ export class AreaListComponent implements OnInit, OnDestroy, ControlValueAccesso
     this.sub = val$.subscribe(v => {
       this.propagateChange(v);
     });
-    this.provinces$ = of(getProvinces());
+    this.provinces$ = of (getProvinces());
     this.cities$ = province$.pipe(
       map((p: string): string[] => {
         console.log(p);
@@ -108,7 +126,9 @@ export class AreaListComponent implements OnInit, OnDestroy, ControlValueAccesso
 
   registerOnTouched(fn: any) {}
 
-  validate(c: FormControl): {[key: string]: any} {
+  validate(c: FormControl): {
+    [key: string]: any
+  } {
     const val = c.value;
     if (!val) {
       return null;
