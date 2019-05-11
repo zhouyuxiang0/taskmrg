@@ -1969,6 +1969,11 @@ deep-extend@^0.6.0:
   resolved "http://registry.npm.taobao.org/deep-extend/download/deep-extend-0.6.0.tgz#c4fa7c95404a17a9c3e8ca7e1537312b736330ac"
   integrity sha1-xPp8lUBKF6nD6Mp+FTcxK3NjMKw=
 
+deep-freeze-strict@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.npm.taobao.org/deep-freeze-strict/download/deep-freeze-strict-1.1.1.tgz#77d0583ca24a69be4bbd9ac2fae415d55523e5b0"
+  integrity sha1-d9BYPKJKab5LvZrC+uQV1VUj5bA=
+
 default-gateway@^2.6.0:
   version "2.7.2"
   resolved "http://registry.npm.taobao.org/default-gateway/download/default-gateway-2.7.2.tgz#b7ef339e5e024b045467af403d50348db4642d0f"
@@ -4450,6 +4455,13 @@ neo-async@^2.5.0:
   version "2.6.0"
   resolved "http://registry.npm.taobao.org/neo-async/download/neo-async-2.6.0.tgz#b9d15e4d71c6762908654b5183ed38b753340835"
   integrity sha1-udFeTXHGdikIZUtRg+04t1M0CDU=
+
+ngrx-store-freeze@^0.2.4:
+  version "0.2.4"
+  resolved "https://registry.npm.taobao.org/ngrx-store-freeze/download/ngrx-store-freeze-0.2.4.tgz#146687cdf7e21244eb9003c7e883f2125847076c"
+  integrity sha1-FGaHzffiEkTrkAPH6IPyElhHB2w=
+  dependencies:
+    deep-freeze-strict "^1.1.1"
 
 nice-try@^1.0.4:
   version "1.0.5"
