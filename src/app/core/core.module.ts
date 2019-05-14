@@ -1,18 +1,21 @@
+import '../utils/debug.util';
+import 'hammerjs';
+
+import { NgModule, Optional, SkipSelf } from '@angular/core';
+
 import { AppRoutingModule } from '../app-routing.module';
+import { AppStoreModule } from '../reducers/index';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonModule } from '@angular/common';
 import { DomSanitizer } from '@angular/platform-browser';
 import { FooterComponent } from './footer/footer.component';
 import { HeaderComponent } from './header/header.component';
 import { HttpClientModule } from '@angular/common/http';
-import { loadSvgResources } from '../utils/svg.utils';
 import { MatIconRegistry } from '@angular/material/icon';
-import { NgModule, Optional, SkipSelf } from '@angular/core';
 import { ServicesModule } from '../services/services.module';
 import { SharedModule } from '../shared/shared.module';
 import { SidebarComponent } from './sidebar/sidebar.component';
-import '../utils/debug.util';
-import 'hammerjs';
+import { loadSvgResources } from '../utils/svg.utils';
 
 @NgModule({
   declarations: [
@@ -21,6 +24,7 @@ import 'hammerjs';
     SidebarComponent
   ],
   imports: [
+    AppStoreModule,
     CommonModule,
     SharedModule,
     ServicesModule.forRoot(),

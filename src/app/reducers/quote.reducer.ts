@@ -4,7 +4,7 @@ import { Quote } from '../domain/quote.model';
 
 export interface State {
   quote: Quote;
-};
+}
 
 export const initialState: State = {
   quote: {

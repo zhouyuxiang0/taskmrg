@@ -12,7 +12,7 @@ import { storeFreeze } from 'ngrx-store-freeze';
 
 export interface State {
   quote: fromQuote.State;
-};
+}
 
 const initialState: State = {
   quote: fromQuote.initialState
